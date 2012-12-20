@@ -1,7 +1,7 @@
 # File Managed by Puppet
 
 # This should be the first option
-log_file=<%= scope.lookupvar('nagios::log_dir') %>/nagios._log
+log_file=<%= scope.lookupvar('nagios::log_dir') %>/nagios.log
 
 # All configurations are managed by the module to keep sanity
 # and consistency among different OS. Default config files are ignored
@@ -52,7 +52,8 @@ temp_path=/tmp
 #broker_module=/somewhere/module2.o arg1 arg2=3 debug=0
 
 # Load Livestatus Module
-broker_module=/usr/lib/check_mk/livestatus.o <%= File.dirname(scope.lookupvar('nagios::commandfile')) %>/live
+broker_module=/usr/lib/check_mk/livestatus.o pnp_path=/var/lib/pnp4nagios/perfdata <%= File.dirname(scope.lookupvar('nagios::commandfile')) %>/live
+broker_module=<%= scope.function_hiera(['check-mk::pnp4nagios::broker_lib']) %> config_file=/etc/pnp4nagios/npcd.cfg
 event_broker_options=-1
 
 # Logging options
@@ -152,7 +153,7 @@ enable_notifications=1
 enable_event_handlers=1
 
 # PROCESS PERFORMANCE DATA OPTIONS
-process_performance_data=0
+process_performance_data=1
 #host_perfdata_command=process-host-perfdata
 #service_perfdata_command=process-service-perfdata
 #host_perfdata_file=/tmp/host-perfdata

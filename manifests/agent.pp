@@ -1,4 +1,5 @@
 class check-mk::agent(
+		$host_tags = [],
 		$package_name,
 		$package_url,
 		$binary
@@ -28,7 +29,8 @@ class check-mk::agent(
 		server => "$binary",
 	}
 
-	@@file{"/etc/check_mk/servers.d/${::fqdn}.mk":
+	# TODO: consider migration to nodesearch
+	@@file{"/etc/check_mk/conf.d/${::fqdn}.mk":
 		tag => "check_mk::agent::${environment}",
 		content => template("check-mk/server_conf.mk.erb"),
 		mode => 644,
@@ -37,7 +39,7 @@ class check-mk::agent(
 	@@exec{"check-mk-inventory-${::fqdn}":
 		tag => "check_mk::agent::${environment}",
 		refreshonly => true,
-		command => "/usr/bin/check_mk -I ${::fqdn}",
+		command => "/usr/local/bin/check_mk -I ${::fqdn}",
 		notify => Exec["check_mk_refresh"]
 	}
 }
