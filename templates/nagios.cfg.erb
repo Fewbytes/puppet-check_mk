@@ -52,7 +52,7 @@ temp_path=/tmp
 #broker_module=/somewhere/module2.o arg1 arg2=3 debug=0
 
 # Load Livestatus Module
-broker_module=/usr/lib/check_mk/livestatus.o <%= File.basename(scope.lookupvar('nagios::commandfile')) %>/live
+broker_module=/usr/lib/check_mk/livestatus.o <%= File.dirname(scope.lookupvar('nagios::commandfile')) %>/live
 event_broker_options=-1
 
 # Logging options

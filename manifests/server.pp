@@ -3,7 +3,7 @@ class check-mk::server(
 	$tarball_url
 ){
 	class {nagios: template => "check-mk/nagios.cfg.erb"}
-	apache::module{'wsgi': install_package => true }
+	apache::module{'python': install_package => true }
 
 	$tarball_name = basename($tarball_url)
 	$tarball_dir_name = regsubst($tarball_name, "\.tar\.gz$", "")
@@ -31,4 +31,11 @@ class check-mk::server(
     }
     File<<| tag == "check_mk::agent::${::environment}" |>>
     Exec<<| tag == "check_mk::agent::${::environment}" |>>
+
+ #    apache::vhost{"check_mk": 
+ #    	docroot => "/usr/share/check_mk/web/htdocs",
+ #    	template => "check-mk/apache_vhost.conf.erb",
+ #    	ssl => false,
+ #    	port => 80
+	# }
 }
