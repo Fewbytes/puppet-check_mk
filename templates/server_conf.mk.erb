@@ -1,0 +1,10 @@
+<% mktags = [] -%>
+ipaddresses["<%= scope.lookupvar("fqdn") -%>"] = "<%= scope.lookupvar("ipaddress") -%>"
+<% scope.to_hash.keys.each do |k| -%>
+<% if k.include?("check_mk_tags") -%>
+<% mktags << scope.to_hash[k] -%>
+<% end -%>
+<% end -%>
+all_hosts += [
+    "<%= scope.lookupvar("fqdn") -%>|<%= mktags.sort.join('|') %>",
+]

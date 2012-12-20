@@ -1,0 +1,3 @@
+check-mk::agent::package_name: check-mk-agent
+check-mk::agent::package_url: http://mathias-kettner.de/download/check-mk-agent_1.2.0p3-2_all.deb
+check-mk::agent::binary: /usr/bin/check_mk_agent

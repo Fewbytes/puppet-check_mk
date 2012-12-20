@@ -1,0 +1,2 @@
+"check-mk::agent::binary": /usr/bin/check_mk_agent
+"check-mk::server::tarball_url": http://mathias-kettner.de/download/check_mk-1.2.0p3.tar.gz
