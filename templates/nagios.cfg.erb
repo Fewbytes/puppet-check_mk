@@ -1,49 +1,49 @@
 # File Managed by Puppet
 
 # This should be the first option
-log_file=<%= scope.lookupvar('nagios::log_dir') %>/nagios.log
+log_file=<%= scope.lookupvar('check-mk::nagios::log_dir') %>/nagios.log
 
 # All configurations are managed by the module to keep sanity
 # and consistency among different OS. Default config files are ignored
-cfg_dir=<%= scope.lookupvar('nagios::customconfigdir') %>/settings
-cfg_dir=<%= scope.lookupvar('nagios::customconfigdir') %>/hostgroups
-cfg_dir=<%= scope.lookupvar('nagios::customconfigdir') %>/hosts
-cfg_dir=<%= scope.lookupvar('nagios::customconfigdir') %>/services
-cfg_dir=<%= scope.lookupvar('nagios::customconfigdir') %>/commands
-cfg_dir=<%= scope.lookupvar('nagios::customconfigdir') %>/extra
+cfg_dir=<%= scope.lookupvar('check-mk::nagios::customconfigdir') %>/settings
+cfg_dir=<%= scope.lookupvar('check-mk::nagios::customconfigdir') %>/hostgroups
+cfg_dir=<%= scope.lookupvar('check-mk::nagios::customconfigdir') %>/hosts
+cfg_dir=<%= scope.lookupvar('check-mk::nagios::customconfigdir') %>/services
+cfg_dir=<%= scope.lookupvar('check-mk::nagios::customconfigdir') %>/commands
+cfg_dir=<%= scope.lookupvar('check-mk::nagios::customconfigdir') %>/extra
 
 # Definitions for broker modules like idoutils.cfg
-cfg_dir=<%= scope.lookupvar('nagios::config_dir') %>/modules
+cfg_dir=<%= scope.lookupvar('check-mk::nagios::config_dir') %>/modules
 
 # Cache files
-object_cache_file=<%= scope.lookupvar('nagios::cachedir') %>/objects.cache
-precached_object_file=<%= scope.lookupvar('nagios::cachedir') %>/objects.precache
+object_cache_file=<%= scope.lookupvar('check-mk::nagios::cachedir') %>/objects.cache
+precached_object_file=<%= scope.lookupvar('check-mk::nagios::cachedir') %>/objects.precache
 
 # Resource file
-resource_file=<%= scope.lookupvar('nagios::resourcefile') %>
+resource_file=<%= scope.lookupvar('check-mk::nagios::resourcefile') %>
 
 # Status file
-status_file=<%= scope.lookupvar('nagios::statusfile') %>
+status_file=<%= scope.lookupvar('check-mk::nagios::statusfile') %>
 status_update_interval=10
 
 # User
-nagios_user=<%= scope.lookupvar('nagios::process_user') %>
-nagios_group=<%= scope.lookupvar('nagios::process_user') %>
+nagios_user=<%= scope.lookupvar('check-mk::nagios::user') %>
+nagios_group=<%= scope.lookupvar('check-mk::nagios::group') %>
 
 # Check External Commands (useful for web interface)
-<% if scope.lookupvar('nagios::bool_check_external_commands') == true -%>
+<% if scope.lookupvar('check-mk::nagios::bool_check_external_commands') == true -%>
 check_external_commands=1
 <% else -%>
 check_external_commands=0
 <% end -%>
 command_check_interval=15s
-command_file=<%= scope.lookupvar('nagios::commandfile') %>
+command_file=<%= scope.lookupvar('check-mk::nagios::commandfile') %>
 external_command_buffer_slots=4096
 
 # Temporary files
-lock_file=<%= scope.lookupvar('nagios::pid_file') %>
-temp_file=<%= scope.lookupvar('nagios::cachedir') %>/nagios.tmp
-<% if scope.lookupvar('nagios::version') != "2" -%>
+lock_file=<%= scope.lookupvar('check-mk::nagios::pid_file') %>
+temp_file=<%= scope.lookupvar('check-mk::nagios::cachedir') %>/nagios.tmp
+<% if scope.lookupvar('check-mk::nagios::version') != "2" -%>
 temp_path=/tmp
 <% end -%>
 
@@ -52,13 +52,13 @@ temp_path=/tmp
 #broker_module=/somewhere/module2.o arg1 arg2=3 debug=0
 
 # Load Livestatus Module
-broker_module=/usr/lib/check_mk/livestatus.o pnp_path=/var/lib/pnp4nagios/perfdata <%= File.dirname(scope.lookupvar('nagios::commandfile')) %>/live
-broker_module=<%= scope.function_hiera(['check-mk::pnp4nagios::broker_lib']) %> config_file=/etc/pnp4nagios/npcd.cfg
+broker_module=/usr/lib/check_mk/livestatus.o pnp_path=<%= scope.lookupvar('check-mk::pnp4nagios::perfdata_dir') %> <%= File.dirname(scope.lookupvar('check-mk::nagios::commandfile')) %>/live
+broker_module=<%= scope.lookupvar('check-mk::pnp4nagios::broker_lib') %> config_file=/etc/pnp4nagios/npcd.cfg
 event_broker_options=-1
 
 # Logging options
 log_rotation_method=d
-log_archive_path=<%= scope.lookupvar('nagios::log_dir') %>/archives
+log_archive_path=<%= scope.lookupvar('check-mk::nagios::log_dir') %>/archives
 #use_daemon_log=1
 use_syslog=1
 #use_syslog_local_facility=0 
@@ -88,7 +88,7 @@ check_result_reaper_frequency=10
 max_check_result_reaper_time=30
 
 # Checks age management ### Only 3>
-check_result_path=<%= scope.lookupvar('nagios::resultpath') %>
+check_result_path=<%= scope.lookupvar('check-mk::nagios::resultpath') %>
 max_check_result_file_age=3600
 cached_host_check_horizon=15
 cached_service_check_horizon=15
@@ -115,10 +115,10 @@ perfdata_timeout=5
 
 # RETAIN STATE INFORMATION
 retain_state_information=1
-state_retention_file=<%= scope.lookupvar('nagios::retentionfile') %>
+state_retention_file=<%= scope.lookupvar('check-mk::nagios::retentionfile') %>
 retention_update_interval=60
 use_retained_program_state=1
-<% if scope.lookupvar('nagios::version') != "2" -%>
+<% if scope.lookupvar('check-mk::nagios::version') != "2" -%>
 use_retained_scheduling_info=1
 retained_host_attribute_mask=0
 retained_service_attribute_mask=0
@@ -132,7 +132,7 @@ retained_contact_service_attribute_mask=0
 # INTERVAL LENGTH
 interval_length=60
 
-<% if scope.lookupvar('nagios::version') != "2" -%>
+<% if scope.lookupvar('check-mk::nagios::version') != "2" -%>
 # CHECK FOR UPDATES
 check_for_updates=1
 bare_update_check=0
@@ -173,7 +173,7 @@ obsess_over_services=0
 #ocsp_command=somecommand
 obsess_over_hosts=0
 #ochp_command=somecommand
-<% if scope.lookupvar('nagios::version') != "2" -%>
+<% if scope.lookupvar('check-mk::nagios::version') != "2" -%>
 translate_passive_host_checks=0
 passive_host_checks_are_soft=0
 <% end -%>
@@ -181,7 +181,7 @@ passive_host_checks_are_soft=0
 
 # ORPHANED HOST/SERVICE CHECK OPTIONS
 check_for_orphaned_services=1
-<% if scope.lookupvar('nagios::version') != "2" -%>
+<% if scope.lookupvar('check-mk::nagios::version') != "2" -%>
 check_for_orphaned_hosts=1
 <% end -%>
 
@@ -191,7 +191,7 @@ check_service_freshness=1
 service_freshness_check_interval=60
 check_host_freshness=0
 host_freshness_check_interval=60
-<% if scope.lookupvar('nagios::version') != "2" -%>
+<% if scope.lookupvar('check-mk::nagios::version') != "2" -%>
 additional_freshness_latency=15
 <% end -%>
 
@@ -210,8 +210,8 @@ date_format=iso8601
 
 
 # P1.PL FILE LOCATION
-p1_file=<%= scope.lookupvar('nagios::p1file') %>
-<% if scope.lookupvar('nagios::version') != "2" -%>
+p1_file=<%= scope.lookupvar('check-mk::nagios::p1file') %>
+<% if scope.lookupvar('check-mk::nagios::version') != "2" -%>
 enable_embedded_perl=1
 use_embedded_perl_implicitly=1
 <% end -%>
@@ -235,7 +235,7 @@ admin_pager=pageroot@localhost
 # DAEMON CORE DUMP OPTION
 daemon_dumps_core=0
 
-<% if scope.lookupvar('nagios::version') != "2" -%>
+<% if scope.lookupvar('check-mk::nagios::version') != "2" -%>
 # LARGE INSTALLATION TWEAKS OPTION
 use_large_installation_tweaks=0
 
@@ -250,6 +250,6 @@ enable_environment_macros=1
 # DEBUG 
 debug_level=0
 debug_verbosity=1
-debug_file=<%= scope.lookupvar('nagios::log_dir') %>/nagios.debug
+debug_file=<%= scope.lookupvar('check-mk::nagios::log_dir') %>/nagios.debug
 max_debug_file_size=1000000
 <% end -%>

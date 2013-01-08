@@ -1,21 +1,14 @@
+# Usage:
+# inclue check-mk::server
+# 
+# Note the lack of parameters to the class, this is due to puppet 3.x hiera integration. See the README for more details
+
 class check-mk::server(
 	$conf_dir="/etc/check_mk",
 	$tarball_url
 ){
-	$pnp4nagios_path = "/var/lib/pnp4nagios"
 
 	class {nagios: template => "check-mk/nagios.cfg.erb"}
-	package{"pnp4nagios": }
-	if $::osfamily == RedHat {
-		Pacakge["pnp4nagios"]{ notify => Service[apache] }
-	}
-	file{"${pnp4nagios_path}":
-		ensure => directory,
-		mode => 644,
-		owner => "nagios",
-		group => "nagios",
-	}
-
 	apache::module{'python': install_package => true }
 
 	$tarball_name = basename($tarball_url)

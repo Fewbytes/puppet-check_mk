@@ -10,5 +10,4 @@ project_page 'UNKNOWN'
 ## Add dependencies, if any:
 dependency 'puppetlabs/stdlib', '>= 3.2.0'
 dependency 'puppetlabs/xinetd'
-dependency 'example42/nagios'
-dependency 'example42/apache'
+dependency 'puppetlabs/apache'
