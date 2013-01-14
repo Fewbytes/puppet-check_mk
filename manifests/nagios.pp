@@ -1,30 +1,34 @@
 # Minimal nagios installation
 
-class check-mk::nagios ( 
+class check_mk::nagios ( 
 	$version,
 	$user,
-	$group
-) inherits check-mk::nagios::config { 
-	include check-mk::pnp4nagios
+	$group,
+	$apache_user,
+	$apache_group
+) inherits check_mk::nagios::config { 
+	include check_mk::pnp4nagios
+	include apache::params
 
-	package{"${check-mk::nagios::package}": }
-	package{"${check-mk::nagios::plugins_package}": }
+	package{"${package}": }
+	package{"${pluginspackage}": }
 	file{"${config_dir}": mode => 644, ensure => directory }
-	file{"${config_dir}/nagios.cfg": mode => 644, content => template("check-mk/nagios.cfg.erb")}
+	file{"${config_dir}/nagios.cfg": mode => 644, content => template("check_mk/nagios.cfg.erb")}
+	file{"$commandfile": mode => 640, owner => $user, group => $group}
 
-	if defined(User["${::apache::params::user}"]) {
-		User["${::apache::params::user}"] { groups +> $group }
+	if defined(User[$apache_user]) {
+		User[$apache_user] { groups +> $group }
 	} else { 
-		user{"${::apache::params::user}": 
+		user{$apache_user: 
 			ensure => present,
-			groups => ["${::apache::params::group}", $group]
+			groups => [$apache_group, $group]
 		}	
 	}
 	service{"${service}":
 		alias => nagios,
 		require => [
 			Package["${package}"],
-			Package["${plugin_package}"], 
+			Package["${pluginspackage}"], 
 			File["${config_dir}/nagios.cfg"]
 		]
 	}

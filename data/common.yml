@@ -1,6 +1,7 @@
-"check-mk::agent::binary": /usr/bin/check_mk_agent
-"check-mk::server::tarball_url": http://mathias-kettner.de/download/check_mk-1.2.0p3.tar.gz
-"check-mk::pnp4nagios::perfdata_dir": /var/lib/pnp4nagios/perfdata
-"check-mk::pnp4nagois::var_dir": /var/lib/pnp4nagios
-"check-mk::nagios::user": nagios
-"check-mk::nagios::group": nagios
+"check_mk::agent::binary": /usr/bin/check_mk_agent
+"check_mk::server::tarball_url": http://mathias-kettner.de/download/check_mk-1.2.0p3.tar.gz
+"check_mk::pnp4nagios::perfdata_dir": /var/lib/pnp4nagios/perfdata
+"check_mk::pnp4nagios::var_dir": /var/lib/pnp4nagios
+"check_mk::nagios::user": nagios
+"check_mk::nagios::group": nagios
+"check_mk::nagios::version": 3

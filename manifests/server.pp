@@ -1,15 +1,16 @@
 # Usage:
-# inclue check-mk::server
+# inclue check_mk::server
 # 
 # Note the lack of parameters to the class, this is due to puppet 3.x hiera integration. See the README for more details
 
-class check-mk::server(
+class check_mk::server(
 	$conf_dir="/etc/check_mk",
 	$tarball_url
 ){
 
-	class {nagios: template => "check-mk/nagios.cfg.erb"}
+	class {nagios: }
 	apache::module{'python': install_package => true }
+	include apache::params
 
 	$tarball_name = basename($tarball_url)
 	$tarball_dir_name = regsubst($tarball_name, '\.tar\.gz$', "")
@@ -38,7 +39,7 @@ class check-mk::server(
     }
     file {"${conf_dir}/main.mk":
     	mode => 644,
-    	content => template("check-mk/main.mk.erb"),
+    	content => template("check_mk/main.mk.erb"),
     	notify => Exec[check_mk_refresh]
 	}
 
@@ -47,12 +48,17 @@ class check-mk::server(
 		mode => 4755
 	}
 
-    File<<| tag == "check_mk::agent::${::environment}" |>>
-    Exec<<| tag == "check_mk::agent::${::environment}" |>>
+	file{"${check_mk::nagios::config::htpasswdfile}":
+		mode => 0600,
+		owner => $::apache::params::user,
+		source => "puppet:///modules/check_mk/htpasswd.users"
+	}
+
+    Check_mk::Host<<| tag == "check_mk::agent::${::environment}" |>>
 
  #    apache::vhost{"check_mk": 
  #    	docroot => "/usr/share/check_mk/web/htdocs",
- #    	template => "check-mk/apache_vhost.conf.erb",
+ #    	template => "check_mk/apache_vhost.conf.erb",
  #    	ssl => false,
  #    	port => 80
 	# }

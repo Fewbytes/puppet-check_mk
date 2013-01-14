@@ -1,9 +1,10 @@
 define check_mk::host(
-	$host_ip = $ipaddress
+	$host_ip = $ipaddress,
+	$host_tags = []
 ) {
 	file{"/etc/check_mk/conf.d/${title}.mk":
 		tag => "check_mk::agent::${environment}",
-		content => template("check-mk/server_conf.mk.erb"),
+		content => template("check_mk/server_conf.mk.erb"),
 		mode => 644,
 		notify => Exec["check-mk-inventory-${title}"]
 	}

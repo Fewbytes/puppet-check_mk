@@ -1,5 +1,5 @@
-ipaddresses["<%= scope.lookupvar("fqdn") -%>"] = "<%= scope.lookupvar("ipaddress") -%>"
+ipaddresses["<%= title -%>"] = "<%= host_ip -%>"
 <% tags = host_tags + classes %>
 all_hosts += [
-    "<%= scope.lookupvar("fqdn") -%>|<%= tags.sort.join('|') %>",
+    "<%= title -%>|<%= tags.sort.uniq.join('|') %>",
 ]

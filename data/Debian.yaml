@@ -1,4 +1,6 @@
-check-mk::agent::package_name: check-mk-agent
-check-mk::agent::package_url: http://mathias-kettner.de/download/check-mk-agent_1.2.0p3-2_all.deb
-check-mk::agent::binary: /usr/bin/check_mk_agent
-check-mk::pnp4nagios::broker_lib: /usr/lib/pnp4nagios/npcdmod.o
+check_mk::agent::package_name: check-mk-agent
+check_mk::agent::package_url: http://mathias-kettner.de/download/check-mk-agent_1.2.0p3-2_all.deb
+check_mk::agent::binary: /usr/bin/check_mk_agent
+check_mk::pnp4nagios::broker_lib: /usr/lib/pnp4nagios/npcdmod.o
+check_mk::nagios::apache_user: www-data
+check_mk::nagios::apache_group: www-data

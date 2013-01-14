@@ -1,4 +1,6 @@
-check-mk::agent::package_name: check_mk-agent
-check-mk::agent::package_url: http://mathias-kettner.de/download/check_mk-agent-1.2.0p3-1.noarch.rpm
-check-mk::agent::binary: /usr/bin/check_mk_agent
-check-mk::pnp4nagios::broker_lib: /usr/lib64/pnp4nagios/npcdmod.o
+check_mk::agent::package_name: check_mk-agent
+check_mk::agent::package_url: http://mathias-kettner.de/download/check_mk-agent-1.2.0p3-1.noarch.rpm
+check_mk::agent::binary: /usr/bin/check_mk_agent
+check_mk::pnp4nagios::broker_lib: /usr/lib64/pnp4nagios/npcdmod.o
+check_mk::nagios::apache_user: apache
+check_mk::nagios::apache_group: apache

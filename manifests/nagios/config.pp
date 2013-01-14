@@ -1,4 +1,4 @@
-class check-mk::nagios::config { 
+class check_mk::nagios::config { 
   $check_external_commands = true
   $cachedir = $::operatingsystem ? {
     /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => '/var/log/nagios',

@@ -1,6 +1,6 @@
-# == Class: check-mk
+# == Class: check_mk
 #
-# Full description of class check-mk here.
+# Full description of class check_mk here.
 #
 # === Parameters
 #
@@ -23,7 +23,7 @@
 #
 # === Examples
 #
-#  class { check-mk:
+#  class { check_mk:
 #    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ]
 #  }
 #
@@ -35,7 +35,7 @@
 #
 # Copyright 2011 Your name here, unless otherwise noted.
 #
-class check-mk {
+class check_mk {
 
 
 }
