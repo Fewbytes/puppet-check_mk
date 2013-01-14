@@ -16,6 +16,12 @@ class check_mk::nagios (
 	file{"${config_dir}/nagios.cfg": mode => 644, content => template("check_mk/nagios.cfg.erb")}
 	file{"$commandfile": mode => 640, owner => $user, group => $group}
 
+	file{"${check_mk::nagios::config::htpasswdfile}":
+		mode => 0600,
+		owner => $apache_user,
+		source => "puppet:///modules/check_mk/htpasswd.users"
+	}
+
 	if defined(User[$apache_user]) {
 		User[$apache_user] { groups +> $group }
 	} else { 

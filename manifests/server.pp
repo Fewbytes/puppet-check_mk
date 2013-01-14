@@ -48,12 +48,6 @@ class check_mk::server(
 		mode => 4755
 	}
 
-	file{"${check_mk::nagios::config::htpasswdfile}":
-		mode => 0600,
-		owner => $::apache::params::user,
-		source => "puppet:///modules/check_mk/htpasswd.users"
-	}
-
     Check_mk::Host<<| tag == "check_mk::agent::${::environment}" |>>
 
  #    apache::vhost{"check_mk": 
