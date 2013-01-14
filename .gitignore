@@ -1,2 +1,6 @@
 .tmp/
 modules/
+.*.swp
+.tmp
+.librarian
+
